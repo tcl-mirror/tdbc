@@ -188,13 +188,13 @@ Tdbc_TokenizeSql(
 
 MODULE_SCOPE int
 TdbcTokenizeObjCmd(
-    ClientData clientData,	/* Unused */
+    ClientData dummy,	/* Unused */
     Tcl_Interp* interp,		/* Tcl interpreter */
     int objc,			/* Parameter count */
     Tcl_Obj *const objv[]	/* Parameter vector */
 ) {
-
     Tcl_Obj* retval;
+    (void)dummy;
 
     /* Check param count */
 

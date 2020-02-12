@@ -159,11 +159,13 @@ Tdbc_MapSqlState(const char* sqlstate)
 
 static int
 TdbcMapSqlStateObjCmd(
-    ClientData unused,		/* No client data */
+    ClientData dummy,		/* No client data */
     Tcl_Interp* interp,		/* Tcl interpreter */
     int objc,			/* Parameter count */
     Tcl_Obj *const objv[]	/* Parameter vector */
 ) {
+    (void)dummy;
+
     if (objc != 2) {
 	Tcl_WrongNumArgs(interp, 1, objv, "sqlstate");
 	return TCL_ERROR;
