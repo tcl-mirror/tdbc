@@ -19,7 +19,7 @@ dnl	to configure the system for the local environment.
 # so that we create the export library with the dll.
 #-----------------------------------------------------------------------
 
-AC_INIT([tdbc], [1.1.2])
+AC_INIT([tdbc],[1.1.2])
 
 #--------------------------------------------------------------------
 # Call TEA_INIT as the first TEA_ macro to set up initial vars.
@@ -234,4 +234,5 @@ TEA_EXPORT_CONFIG([tdbc])
 # Set up to produce Makefile from Makefile.in and tdbcConfig.sh from
 # tdbcConfig.sh.in.
 
-AC_OUTPUT([Makefile pkgIndex.tcl tdbcConfig.sh])
+AC_CONFIG_FILES([Makefile pkgIndex.tcl tdbcConfig.sh])
+AC_OUTPUT
