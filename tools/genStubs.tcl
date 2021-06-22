@@ -27,7 +27,7 @@
 #	+ stubs table is const-qualified
 #
 
-package require Tcl 8
+package require Tcl 8.5-
 
 namespace eval genStubs {
     # libraryName --
