@@ -70,6 +70,13 @@ $(OUT_DIR)\pkgIndex.tcl: $(ROOT)\pkgIndex.tcl.in
 @TCL_VERSION@         $(TCL_DOTVERSION)
 <<
 
+$(ROOT)\manifest.uuid:
+   copy $(WIN_DIR)\gitmanifest.in $(ROOT)\manifest.uuid
+   git rev-parse HEAD >>$(ROOT)\manifest.uuid
+
+$(TMP_DIR)\tdbcUuid.h:	$(ROOT)\manifest.uuid
+	copy $(WIN_DIR)\tdbcUuid.h.in+$(ROOT)\manifest.uuid $(TMP_DIR)\tdbcUuid.h
+
 .PHONY: $(OUT_DIR)\tdbcConfig.sh
 
 # TBD - this (meaning using nmake builds for autoconf) does not really work
