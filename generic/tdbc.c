@@ -194,6 +194,11 @@ TdbcMapSqlStateObjCmd(
  *-----------------------------------------------------------------------------
  */
 
+#ifndef STRINGIFY
+#  define STRINGIFY(x) STRINGIFY1(x)
+#  define STRINGIFY1(x) #x
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif  /* __cplusplus */
