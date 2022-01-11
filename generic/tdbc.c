@@ -20,7 +20,7 @@
 
 /* Static procedures declared in this file */
 
-static int TdbcMapSqlStateObjCmd(ClientData unused, Tcl_Interp* interp,
+static int TdbcMapSqlStateObjCmd(void *unused, Tcl_Interp* interp,
 				 int objc, Tcl_Obj *const objv[]);
 
 MODULE_SCOPE const TdbcStubs tdbcStubs;
@@ -160,7 +160,7 @@ Tdbc_MapSqlState(const char* sqlstate)
 
 static int
 TdbcMapSqlStateObjCmd(
-    ClientData dummy,		/* No client data */
+    void *dummy,		/* No client data */
     Tcl_Interp* interp,		/* Tcl interpreter */
     int objc,			/* Parameter count */
     Tcl_Obj *const objv[]	/* Parameter vector */
@@ -220,7 +220,7 @@ Tdbc_Init(
 
     for (i = 0; commandTable[i].name != NULL; ++i) {
 	Tcl_CreateObjCommand(interp, commandTable[i].name, commandTable[i].proc,
-			     (ClientData) NULL, (Tcl_CmdDeleteProc*) NULL);
+			     NULL, NULL);
     }
     if (Tcl_GetCommandInfo(interp, "::tcl::build-info", &info)) {
 	Tcl_CreateObjCommand(interp, "::tdbc::build-info",
@@ -282,7 +282,7 @@ Tdbc_Init(
     /* Provide the TDBC package */
 
     if (Tcl_PkgProvideEx(interp, PACKAGE_NAME, PACKAGE_VERSION,
-			 (ClientData) &tdbcStubs) == TCL_ERROR) {
+			 (void *) &tdbcStubs) == TCL_ERROR) {
 	return TCL_ERROR;
     }
 
