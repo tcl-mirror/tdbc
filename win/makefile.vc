@@ -3,12 +3,12 @@
 # Makefile for TBDC Core
 #
 # Basic build, test and install
-#   nmake /s /nologo /f makefile.vc INSTALLDIR=c:\path\to\installdir
-#   nmake /s /nologo /f makefile.vc INSTALLDIR=c:\path\to\installdir
-#   nmake /s /nologo /f makefile.vc INSTALLDIR=c:\path\to\installdir
+#   nmake /s /f makefile.vc INSTALLDIR=c:\path\to\installdir
+#   nmake /s /f makefile.vc INSTALLDIR=c:\path\to\installdir
+#   nmake /s /f makefile.vc INSTALLDIR=c:\path\to\installdir
 #
-# For other build options (debug, static etc.)
-# See TIP 477 (https://core.tcl-lang.org/tips/doc/trunk/tip/477.md) for
+# For other build options (debug, static etc.),
+# See TIP 477 (https://core.tcl-lang.org/tips/doc/main/tip/477.md) for
 # detailed documentation.
 #
 # See the file "license.terms" for information on usage and redistribution
@@ -18,6 +18,9 @@
 
 PROJECT         = tdbc
 RCFILE      = tdbc.rc
+
+PRJ_DEFINES = $(PRJ_DEFINES) -DTCL_NO_DEPRECATED=1
+PRJ_DEFINES = $(PRJ_DEFINES) -I$(TMP_DIR)
 
 !include "rules-ext.vc"
 
