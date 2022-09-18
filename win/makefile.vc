@@ -19,7 +19,7 @@
 PROJECT         = tdbc
 RCFILE      = tdbc.rc
 
-PRJ_DEFINES = $(PRJ_DEFINES) -DTCL_NO_DEPRECATED=1
+PRJ_DEFINES = $(PRJ_DEFINES)
 PRJ_DEFINES = $(PRJ_DEFINES) -I$(TMP_DIR)
 
 !include "rules-ext.vc"
