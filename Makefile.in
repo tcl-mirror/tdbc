@@ -350,18 +350,16 @@ dist: dist-clean $(srcdir)/manifest.uuid
 	# TEA files
 	$(DIST_INSTALL_DATA) $(srcdir)/Makefile.in \
 	    $(srcdir)/aclocal.m4 $(srcdir)/configure.ac \
-	    $(DIST_DIR)/
+	    $(srcdir)/manifest.uuid $(DIST_DIR)/
 	$(DIST_INSTALL_SCRIPT) $(srcdir)/configure $(DIST_DIR)/
 
 	$(INSTALL_DATA_DIR) $(DIST_DIR)/tclconfig
 	$(DIST_INSTALL_DATA) $(srcdir)/tclconfig/README.txt \
-	    $(srcdir)/manifest.uuid \
 	    $(srcdir)/tclconfig/tcl.m4 $(srcdir)/tclconfig/install-sh \
 	    $(DIST_DIR)/tclconfig/
 
 	# Extension files
 	$(DIST_INSTALL_DATA) \
-	    $(srcdir)/manifest.uuid \
 	    $(srcdir)/ChangeLog \
 	    $(srcdir)/license.terms \
 	    $(srcdir)/README \
