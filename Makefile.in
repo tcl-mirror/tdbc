@@ -361,6 +361,7 @@ dist: dist-clean $(srcdir)/manifest.uuid
 
 	# Extension files
 	$(DIST_INSTALL_DATA) \
+	    $(srcdir)/manifest.uuid \
 	    $(srcdir)/ChangeLog \
 	    $(srcdir)/license.terms \
 	    $(srcdir)/README \
