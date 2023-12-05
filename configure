@@ -5627,9 +5627,7 @@ printf "%s\n" "$ac_cv_c_bigendian" >&6; }
    no)
       ;; #(
    universal)
-
-printf "%s\n" "#define AC_APPLE_UNIVERSAL_BUILD 1" >>confdefs.h
-
+     #
      ;; #(
    *)
      as_fn_error $? "unknown endianness
@@ -9171,11 +9169,7 @@ printf "%s\n" "#define TCL_MAJOR_VERSION 8" >>confdefs.h
 	    eval eval "PKG_LIB_FILE=${PACKAGE_LIB_PREFIX}${PACKAGE_NAME}${UNSHARED_LIB_SUFFIX}"
 	fi
 	# Some packages build their own stubs libraries
-	if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" == x; then
-	    eval eval "PKG_STUB_LIB_FILE=${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub.a"
-	else
-	    eval eval "PKG_STUB_LIB_FILE=${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
-	fi
+	eval eval "PKG_STUB_LIB_FILE=${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
 	if test "$GCC" = "yes"; then
 	    PKG_STUB_LIB_FILE=lib${PKG_STUB_LIB_FILE}
 	fi
@@ -9479,7 +9473,6 @@ done
 LIBOBJS=$ac_libobjs
 
 LTLIBOBJS=$ac_ltlibobjs
-
 
 
 CFLAGS="${CFLAGS} ${CPPFLAGS}"; CPPFLAGS=""
