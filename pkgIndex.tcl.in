@@ -16,11 +16,11 @@ apply {{dir} {
 	package ifneeded @PACKAGE_NAME@ @PACKAGE_VERSION@ \
 		"package require TclOO;\
 		[list load [file join $dir @PKG_LIB_FILE9@] [string totitle @PACKAGE_NAME@]]\;\
-		[list source $libraryfile]"
+		[list source -encoding utf-8 $libraryfile]"
     } else {
 	package ifneeded @PACKAGE_NAME@ @PACKAGE_VERSION@ \
 		"package require TclOO;\
 		[list load [file join $dir @PKG_LIB_FILE8@] [string totitle @PACKAGE_NAME@]]\;\
-		[list source $libraryfile]"
+		[list source -encoding utf-8 $libraryfile]"
     }
 }} $dir
