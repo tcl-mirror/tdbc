@@ -411,8 +411,8 @@ dist: dist-clean $(srcdir)/manifest.uuid
 #========================================================================
 
 genstubs: $(srcdir)/tools/genStubs.tcl $(srcdir)/generic/tdbc.decls
-	@echo $(TCLSH_PROGRAM) $(srcdir)/tools/genStubs.tcl $(srcdir)/generic $(srcdir)/generic/tdbc.decls
-	@$(TCLSH) `@CYGPATH@ $(srcdir)/tools/genStubs.tcl` `@CYGPATH@ $(srcdir)/generic` `@CYGPATH@ $(srcdir)/generic/tdbc.decls`
+	@echo $(TCLSH_PROGRAM) -encoding utf-8 $(srcdir)/tools/genStubs.tcl $(srcdir)/generic $(srcdir)/generic/tdbc.decls
+	@$(TCLSH) `@CYGPATH@ -encoding utf-8 $(srcdir)/tools/genStubs.tcl` `@CYGPATH@ $(srcdir)/generic` `@CYGPATH@ $(srcdir)/generic/tdbc.decls`
 
 #========================================================================
 # End of user-definable section

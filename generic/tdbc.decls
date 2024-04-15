@@ -22,12 +22,12 @@ scspec TDBCAPI
 # The public API for TDBC
 
 # Just a dummy definition, meant to keep TDBC_STUBS_REVISION the same
-declare 0 current {
-    int Tdbc_Init_(Tcl_Interp* interp)
+declare 0 {
+    int Tdbc_Init_(Tcl_Interp *interp)
 }
-declare 1 current {
-    Tcl_Obj* Tdbc_TokenizeSql(Tcl_Interp* interp, const char* statement)
+declare 1 {
+    Tcl_Obj* Tdbc_TokenizeSql(Tcl_Interp *interp, const char *statement)
 }
-declare 2 current {
-    const char* Tdbc_MapSqlState(const char* sqlstate)
+declare 2 {
+    const char* Tdbc_MapSqlState(const char *sqlstate)
 }
