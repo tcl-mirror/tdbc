@@ -9396,7 +9396,7 @@ rm -rf conftest*
 
     PACKAGE_LIB_PREFIX8="${PACKAGE_LIB_PREFIX}"
     PACKAGE_LIB_PREFIX9="${PACKAGE_LIB_PREFIX}tcl9"
-    if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" == x; then
+    if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" = x; then
 	PACKAGE_LIB_PREFIX="${PACKAGE_LIB_PREFIX9}"
     else
 	PACKAGE_LIB_PREFIX="${PACKAGE_LIB_PREFIX8}"
@@ -9427,7 +9427,7 @@ printf "%s\n" "#define TCL_MAJOR_VERSION 8" >>confdefs.h
 	    eval eval "PKG_LIB_FILE=${PACKAGE_LIB_PREFIX}${PACKAGE_NAME}${UNSHARED_LIB_SUFFIX}"
 	fi
 	# Some packages build their own stubs libraries
-	if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" == x; then
+	if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" = x; then
 	    eval eval "PKG_STUB_LIB_FILE=${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub.a"
 	else
 	    eval eval "PKG_STUB_LIB_FILE=${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
@@ -9455,7 +9455,7 @@ printf "%s\n" "#define TCL_MAJOR_VERSION 8" >>confdefs.h
 	    eval eval "PKG_LIB_FILE=lib${PACKAGE_LIB_PREFIX}${PACKAGE_NAME}${UNSHARED_LIB_SUFFIX}"
 	fi
 	# Some packages build their own stubs libraries
-	if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" == x; then
+	if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" = x; then
 	    eval eval "PKG_STUB_LIB_FILE=lib${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub.a"
 	else
 	    eval eval "PKG_STUB_LIB_FILE=lib${PACKAGE_LIB_PREFIX8}${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
@@ -9574,7 +9574,7 @@ fi
 	eval tdbc_LIB_FLAG="-ltdbc`echo ${PACKAGE_VERSION} | tr -d .`"
 	eval tdbc_STUB_LIB_FLAG="-ltdbcstub`echo ${PACKAGE_VERSION} | tr -d .`"
     fi
-    if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" == x; then
+    if test "${TCL_MAJOR_VERSION}" -gt 8 -a x"${with_tcl8}" = x; then
 	eval tdbc_STUB_LIB_FLAG="-ltdbcstub"
     fi
 
