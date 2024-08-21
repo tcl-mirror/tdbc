@@ -65,7 +65,7 @@ To advance the version number:
 
 (6) Make the Windows binary distribution and ship it.
 
-        tclsh86 ./makeWinBinaries.tcl
+	tclsh86 ./makeWinBinaries.tcl
 
     Result is a /tmp/dist/tdbc-${VERSION}-win32/ directory that can be
     zipped and uploaded to SF
@@ -73,8 +73,8 @@ To advance the version number:
 (7) Make the HTML manual
 
     tclsh86 tdbc/tools/tdbc-man2html.tcl \
-        --srcdir=. --htmldir=/tmp/dist/tdbc${VERSION}-doc \
-        --tdbc --tdbcmysql --tdbcodbc --tdbcpostgres --tdbcsqlite3
+	--srcdir=. --htmldir=/tmp/dist/tdbc${VERSION}-doc \
+	--tdbc --tdbcmysql --tdbcodbc --tdbcpostgres --tdbcsqlite3
 
     Result is a /tmp/dist/tdbc${VERSION}-doc directory containing the
     HTML manual.
@@ -87,4 +87,4 @@ To advance the version number:
 (10) Upload the manual
 
     scp -r /tmp/dist/tdbc$(VERSION)-doc/* \
-        userid,tcl@web.sourceforge.net:/home/groups/t/tc/tcl/htdocs/tdbc/
+	userid,tcl@web.sourceforge.net:/home/groups/t/tc/tcl/htdocs/tdbc/

@@ -78,90 +78,90 @@ Tdbc_TokenizeSql(
 
     resultPtr = Tcl_NewObj();
     for(i = 0; zSql[i]; i++){
-        switch( zSql[i] ){
+	switch( zSql[i] ){
 
-            /* Skip over quoted strings.  Strings can be quoted in several
-            ** ways:    '...'   "..."   [....]
-            */
-            case '\'':
-            case '"':
-            case '[': {
-                int endChar = zSql[i];
-                if (endChar == '[') endChar = ']';
-                for(i++; zSql[i] && zSql[i]!=endChar; i++){}
-                if (zSql[i] == 0) i--;
-                break;
-            }
+	    /* Skip over quoted strings.  Strings can be quoted in several
+	    ** ways:    '...'   "..."   [....]
+	    */
+	    case '\'':
+	    case '"':
+	    case '[': {
+		int endChar = zSql[i];
+		if (endChar == '[') endChar = ']';
+		for(i++; zSql[i] && zSql[i]!=endChar; i++){}
+		if (zSql[i] == 0) i--;
+		break;
+	    }
 
-            /* Skip over SQL-style comments: -- to end of line
-            */
-            case '-': {
-                if (zSql[i+1] == '-') {
-                     for(i+=2; zSql[i] && zSql[i]!='\n'; i++){}
-                     if (zSql[i] == 0) i--;
-                }
-                break;
-            }
+	    /* Skip over SQL-style comments: -- to end of line
+	    */
+	    case '-': {
+		if (zSql[i+1] == '-') {
+		     for(i+=2; zSql[i] && zSql[i]!='\n'; i++){}
+		     if (zSql[i] == 0) i--;
+		}
+		break;
+	    }
 
-            /* Skip over C-style comments
-            */
-            case '/': {
-                if (zSql[i+1] == '*') {
-                     i += 3;
-                     while (zSql[i] && (zSql[i]!='/' || zSql[i-1]!='*')) {
-                         i++;
-                     }
-                     if (zSql[i] == 0) i--;
-                }
-                break;
-            }
+	    /* Skip over C-style comments
+	    */
+	    case '/': {
+		if (zSql[i+1] == '*') {
+		     i += 3;
+		     while (zSql[i] && (zSql[i]!='/' || zSql[i-1]!='*')) {
+			 i++;
+		     }
+		     if (zSql[i] == 0) i--;
+		}
+		break;
+	    }
 
-            /* Break up multiple SQL statements at each semicolon */
-            case ';': {
-                if (i>0 ){
-                    Tcl_ListObjAppendElement(interp, resultPtr,
-                              Tcl_NewStringObj(zSql, i));
-                }
-                Tcl_ListObjAppendElement(interp, resultPtr,
-                          Tcl_NewStringObj(";",1));
-                zSql += i + 1;
-                i = -1;
-                break;
-            }
+	    /* Break up multiple SQL statements at each semicolon */
+	    case ';': {
+		if (i>0 ){
+		    Tcl_ListObjAppendElement(interp, resultPtr,
+			      Tcl_NewStringObj(zSql, i));
+		}
+		Tcl_ListObjAppendElement(interp, resultPtr,
+			  Tcl_NewStringObj(";",1));
+		zSql += i + 1;
+		i = -1;
+		break;
+	    }
 
-            /* Any of the characters ':', '$', or '@' which is followed
-            ** by an alphanumeric or '_' and is not preceded by the same
-            ** is a host parameter. A name following a doubled colon '::'
+	    /* Any of the characters ':', '$', or '@' which is followed
+	    ** by an alphanumeric or '_' and is not preceded by the same
+	    ** is a host parameter. A name following a doubled colon '::'
 	    ** is also not a host parameter.
-            */
+	    */
 	    case ':': {
 		if (i > 0 && zSql[i-1] == ':') break;
 	    }
 		/* fallthru */
 
-            case '$':
-            case '@': {
-                if (i>0 && (isalnum((unsigned char)(zSql[i-1]))
+	    case '$':
+	    case '@': {
+		if (i>0 && (isalnum((unsigned char)(zSql[i-1]))
 			    || zSql[i-1]=='_')) break;
-                if (!isalnum((unsigned char)(zSql[i+1]))
+		if (!isalnum((unsigned char)(zSql[i+1]))
 		    && zSql[i+1]!='_') break;
-                if (i>0 ){
-                    Tcl_ListObjAppendElement(interp, resultPtr,
-                              Tcl_NewStringObj(zSql, i));
-                    zSql += i;
-                }
-                i = 1;
-                while (zSql[i] && (isalnum((unsigned char)(zSql[i]))
+		if (i>0 ){
+		    Tcl_ListObjAppendElement(interp, resultPtr,
+			      Tcl_NewStringObj(zSql, i));
+		    zSql += i;
+		}
+		i = 1;
+		while (zSql[i] && (isalnum((unsigned char)(zSql[i]))
 				   || zSql[i]=='_')) {
-                    i++;
-                }
-                Tcl_ListObjAppendElement(interp, resultPtr,
-                          Tcl_NewStringObj(zSql, i));
-                zSql += i;
-                i = -1;
-                break;
-            }
-        }
+		    i++;
+		}
+		Tcl_ListObjAppendElement(interp, resultPtr,
+			  Tcl_NewStringObj(zSql, i));
+		zSql += i;
+		i = -1;
+		break;
+	    }
+	}
     }
     if (i > 0) {
 	Tcl_ListObjAppendElement(interp, resultPtr, Tcl_NewStringObj(zSql, i));

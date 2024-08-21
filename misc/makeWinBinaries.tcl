@@ -35,8 +35,8 @@ foreach dir $pathlist {
 	file copy -force [file join $instdir $dir $file] \
 	    [file join $distdir $dir $file]
 	puts $f "file copy -force \
-                           \[file join \$distdir $dir $file\] \
-                           \[file join \$instdir $dir $file\]"
+			   \[file join \$distdir $dir $file\] \
+			   \[file join \$instdir $dir $file\]"
     }
 }
 puts $f {

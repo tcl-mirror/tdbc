@@ -58,7 +58,7 @@ proc tdbc::ParseConvenienceArgs {argv optsVar} {
 			return -code error \
 			    -errorcode $errorcode \
 			    "bad variable type \"$value\":\
-                             must be lists or dicts"
+			     must be lists or dicts"
 		    }
 		    dict set opts -as $value
 		}
@@ -75,7 +75,7 @@ proc tdbc::ParseConvenienceArgs {argv optsVar} {
 		    return -code error \
 			-errorcode $errorcode \
 			"bad option \"$key\":\
-                             must be -as or -columnsvariable"
+			must be -as or -columnsvariable"
 		}
 	    }
 	} else {
@@ -227,7 +227,7 @@ oo::class create ::tdbc::connection {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? sqlcode ?dictionary?"
+		 ?-option value?... ?--? sqlcode ?dictionary?"
 	}
 	lappend cmd $sqlcode
 
@@ -283,7 +283,7 @@ oo::class create ::tdbc::connection {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? varname sqlcode ?dictionary? script"
+		 ?-option value?... ?--? varname sqlcode ?dictionary? script"
 	}
 	lappend cmd $sqlcode
 
@@ -331,27 +331,27 @@ oo::class create ::tdbc::connection {
 	set catalogClause {}
 	if {[lindex [set count [my allrows -as lists {
 	    SELECT COUNT(*)
-            FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-            WHERE CONSTRAINT_CATALOG IS NOT NULL}]] 0 0] != 0} {
+	    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+	    WHERE CONSTRAINT_CATALOG IS NOT NULL}]] 0 0] != 0} {
 	    set catalogClause \
 		{AND xtable.CONSTRAINT_CATALOG = xcolumn.CONSTRAINT_CATALOG}
 	}
 	set primaryKeysStatement [my prepare "
 	     SELECT xtable.TABLE_SCHEMA AS \"tableSchema\",
-                 xtable.TABLE_NAME AS \"tableName\",
-                 xtable.CONSTRAINT_CATALOG AS \"constraintCatalog\",
-                 xtable.CONSTRAINT_SCHEMA AS \"constraintSchema\",
-                 xtable.CONSTRAINT_NAME AS \"constraintName\",
-                 xcolumn.COLUMN_NAME AS \"columnName\",
-                 xcolumn.ORDINAL_POSITION AS \"ordinalPosition\"
-             FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS xtable
-             INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE xcolumn
-                     ON xtable.CONSTRAINT_SCHEMA = xcolumn.CONSTRAINT_SCHEMA
-                    AND xtable.TABLE_NAME = xcolumn.TABLE_NAME
-                    AND xtable.CONSTRAINT_NAME = xcolumn.CONSTRAINT_NAME
-	            $catalogClause
-             WHERE xtable.TABLE_NAME = :tableName
-               AND xtable.CONSTRAINT_TYPE = 'PRIMARY KEY'
+		 xtable.TABLE_NAME AS \"tableName\",
+		 xtable.CONSTRAINT_CATALOG AS \"constraintCatalog\",
+		 xtable.CONSTRAINT_SCHEMA AS \"constraintSchema\",
+		 xtable.CONSTRAINT_NAME AS \"constraintName\",
+		 xcolumn.COLUMN_NAME AS \"columnName\",
+		 xcolumn.ORDINAL_POSITION AS \"ordinalPosition\"
+	     FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS xtable
+	     INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE xcolumn
+		     ON xtable.CONSTRAINT_SCHEMA = xcolumn.CONSTRAINT_SCHEMA
+		    AND xtable.TABLE_NAME = xcolumn.TABLE_NAME
+		    AND xtable.CONSTRAINT_NAME = xcolumn.CONSTRAINT_NAME
+		    $catalogClause
+	     WHERE xtable.TABLE_NAME = :tableName
+	       AND xtable.CONSTRAINT_TYPE = 'PRIMARY KEY'
   	"]
     }
 
@@ -381,8 +381,8 @@ oo::class create ::tdbc::connection {
 	set catalogClause2 {}
 	if {[lindex [set count [my allrows -as lists {
 	    SELECT COUNT(*)
-            FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-            WHERE CONSTRAINT_CATALOG IS NOT NULL}]] 0 0] != 0} {
+	    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+	    WHERE CONSTRAINT_CATALOG IS NOT NULL}]] 0 0] != 0} {
 	    set catalogClause1 \
 		{AND fkc.CONSTRAINT_CATALOG = rc.CONSTRAINT_CATALOG}
 	    set catalogClause2 \
@@ -399,37 +399,37 @@ oo::class create ::tdbc::connection {
 	    } {
 		set stmt [my prepare "
 	     SELECT rc.CONSTRAINT_CATALOG AS \"foreignConstraintCatalog\",
-                    rc.CONSTRAINT_SCHEMA AS \"foreignConstraintSchema\",
-                    rc.CONSTRAINT_NAME AS \"foreignConstraintName\",
-                    rc.UNIQUE_CONSTRAINT_CATALOG
-                        AS \"primaryConstraintCatalog\",
-                    rc.UNIQUE_CONSTRAINT_SCHEMA AS \"primaryConstraintSchema\",
-                    rc.UNIQUE_CONSTRAINT_NAME AS \"primaryConstraintName\",
-                    rc.UPDATE_RULE AS \"updateAction\",
+		    rc.CONSTRAINT_SCHEMA AS \"foreignConstraintSchema\",
+		    rc.CONSTRAINT_NAME AS \"foreignConstraintName\",
+		    rc.UNIQUE_CONSTRAINT_CATALOG
+			AS \"primaryConstraintCatalog\",
+		    rc.UNIQUE_CONSTRAINT_SCHEMA AS \"primaryConstraintSchema\",
+		    rc.UNIQUE_CONSTRAINT_NAME AS \"primaryConstraintName\",
+		    rc.UPDATE_RULE AS \"updateAction\",
 		    rc.DELETE_RULE AS \"deleteAction\",
-                    pkc.TABLE_CATALOG AS \"primaryCatalog\",
-                    pkc.TABLE_SCHEMA AS \"primarySchema\",
-                    pkc.TABLE_NAME AS \"primaryTable\",
-                    pkc.COLUMN_NAME AS \"primaryColumn\",
-                    fkc.TABLE_CATALOG AS \"foreignCatalog\",
-                    fkc.TABLE_SCHEMA AS \"foreignSchema\",
-                    fkc.TABLE_NAME AS \"foreignTable\",
-                    fkc.COLUMN_NAME AS \"foreignColumn\",
-                    pkc.ORDINAL_POSITION AS \"ordinalPosition\"
-             FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
-             INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE fkc
-                     ON fkc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
-                    AND fkc.CONSTRAINT_SCHEMA = rc.CONSTRAINT_SCHEMA
-                    $catalogClause1
-             INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE pkc
-                     ON pkc.CONSTRAINT_NAME = rc.UNIQUE_CONSTRAINT_NAME
-                     AND pkc.CONSTRAINT_SCHEMA = rc.UNIQUE_CONSTRAINT_SCHEMA
-                     $catalogClause2
-                     AND pkc.ORDINAL_POSITION = fkc.ORDINAL_POSITION
-             WHERE 1=1
-                 $clause1
-                 $clause2
-             ORDER BY \"foreignConstraintCatalog\", \"foreignConstraintSchema\", \"foreignConstraintName\", \"ordinalPosition\"
+		    pkc.TABLE_CATALOG AS \"primaryCatalog\",
+		    pkc.TABLE_SCHEMA AS \"primarySchema\",
+		    pkc.TABLE_NAME AS \"primaryTable\",
+		    pkc.COLUMN_NAME AS \"primaryColumn\",
+		    fkc.TABLE_CATALOG AS \"foreignCatalog\",
+		    fkc.TABLE_SCHEMA AS \"foreignSchema\",
+		    fkc.TABLE_NAME AS \"foreignTable\",
+		    fkc.COLUMN_NAME AS \"foreignColumn\",
+		    pkc.ORDINAL_POSITION AS \"ordinalPosition\"
+	     FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+	     INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE fkc
+		     ON fkc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+		    AND fkc.CONSTRAINT_SCHEMA = rc.CONSTRAINT_SCHEMA
+		    $catalogClause1
+	     INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE pkc
+		     ON pkc.CONSTRAINT_NAME = rc.UNIQUE_CONSTRAINT_NAME
+		     AND pkc.CONSTRAINT_SCHEMA = rc.UNIQUE_CONSTRAINT_SCHEMA
+		     $catalogClause2
+		     AND pkc.ORDINAL_POSITION = fkc.ORDINAL_POSITION
+	     WHERE 1=1
+		 $clause1
+		 $clause2
+	     ORDER BY \"foreignConstraintCatalog\", \"foreignConstraintSchema\", \"foreignConstraintName\", \"ordinalPosition\"
 "]
 		dict set foreignKeysStatement $exists1 $exists2 $stmt
 	    }
@@ -452,7 +452,7 @@ oo::class create ::tdbc::connection {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?..."
+		 ?-option value?..."
 	}
 	foreach {key value} $args {
 	    if {$key ni {-primary -foreign}} {
@@ -591,7 +591,7 @@ oo::class create tdbc::statement {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? ?dictionary?"
+		 ?-option value?... ?--? ?dictionary?"
 	}
 
 	# Get the result set
@@ -651,7 +651,7 @@ oo::class create tdbc::statement {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? varName ?dictionary? script"
+		 ?-option value?... ?--? varName ?dictionary? script"
 	}
 
 	# Get the result set
@@ -722,7 +722,7 @@ oo::class create tdbc::resultset {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? varName script"
+		 ?-option value?... ?--? varName script"
 	}
 
 	# Do -columnsvariable if requested
@@ -767,7 +767,7 @@ oo::class create tdbc::resultset {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? varName script"
+		 ?-option value?... ?--? varName script"
 	}
 
 	# Do -columnsvariable if requested
@@ -852,7 +852,7 @@ oo::class create tdbc::resultset {
 			lappend errorcode badOption $key
 			return -code error -errorcode $errorcode \
 			    "bad option \"$key\":\
-                             must be -as or -columnsvariable"
+			     must be -as or -columnsvariable"
 		    }
 		}
 	    } else {
@@ -867,7 +867,7 @@ oo::class create tdbc::resultset {
 	    lappend errorcode wrongNumArgs
 	    return -code error -errorcode $errorcode \
 		"wrong # args: should be [lrange [info level 0] 0 1]\
-                 ?-option value?... ?--? varName"
+		 ?-option value?... ?--? varName"
 	}
 	upvar 1 [lindex $args 0] row
 	if {[dict get $opts -as] eq {lists}} {
