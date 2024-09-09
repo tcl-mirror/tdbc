@@ -74,7 +74,7 @@ Tdbc_TokenizeSql(
     const char* zSql)
 {
     Tcl_Obj *resultPtr;
-    size_t i;
+    Tcl_Size i;
 
     resultPtr = Tcl_NewObj();
     for(i = 0; zSql[i]; i++){
