@@ -20,8 +20,7 @@
 
 /* Static procedures declared in this file */
 
-static int TdbcMapSqlStateObjCmd(void *unused, Tcl_Interp* interp,
-				 int objc, Tcl_Obj *const objv[]);
+static Tcl_ObjCmdProc2 TdbcMapSqlStateObjCmd;
 
 MODULE_SCOPE const TdbcStubs tdbcStubs;
 
@@ -29,11 +28,11 @@ MODULE_SCOPE const TdbcStubs tdbcStubs;
 
 static const struct TdbcCommand {
     const char* name;		/* Name of the command */
-    Tcl_ObjCmdProc* proc;	/* Command procedure */
+    Tcl_ObjCmdProc2* proc;	/* Command procedure */
 } commandTable[] = {
     { "::tdbc::mapSqlState",	TdbcMapSqlStateObjCmd },
-    { "::tdbc::tokenize", 	TdbcTokenizeObjCmd },
-    { NULL, 		  	NULL               },
+    { "::tdbc::tokenize",	TdbcTokenizeObjCmd },
+    { NULL,		 	NULL               },
 };
 
 /* Table mapping SQLSTATE to error code */
@@ -162,7 +161,7 @@ static int
 TdbcMapSqlStateObjCmd(
     TCL_UNUSED(void *),		/* No client data */
     Tcl_Interp* interp,		/* Tcl interpreter */
-    int objc,			/* Parameter count */
+    Tcl_Size objc,			/* Parameter count */
     Tcl_Obj *const objv[]	/* Parameter vector */
 ) {
     if (objc != 2) {
@@ -197,6 +196,59 @@ TdbcMapSqlStateObjCmd(
 #  define STRINGIFY1(x) #x
 #endif
 
+static const char version[] = PACKAGE_VERSION "+" STRINGIFY(TDBC_VERSION_UUID)
+#if defined(__clang__) && defined(__clang_major__)
+    ".clang-" STRINGIFY(__clang_major__)
+#if __clang_minor__ < 10
+    "0"
+#endif
+    STRINGIFY(__clang_minor__)
+#endif
+#if defined(__cplusplus) && !defined(__OBJC__)
+    ".cplusplus"
+#endif
+#ifndef NDEBUG
+    ".debug"
+#endif
+#if !defined(__clang__) && !defined(__INTEL_COMPILER) && defined(__GNUC__)
+    ".gcc-" STRINGIFY(__GNUC__)
+#if __GNUC_MINOR__ < 10
+    "0"
+#endif
+    STRINGIFY(__GNUC_MINOR__)
+#endif
+#ifdef __INTEL_COMPILER
+    ".icc-" STRINGIFY(__INTEL_COMPILER)
+#endif
+#ifdef TCL_MEM_DEBUG
+    ".memdebug"
+#endif
+#if defined(_MSC_VER)
+    ".msvc-" STRINGIFY(_MSC_VER)
+#endif
+#ifdef USE_NMAKE
+    ".nmake"
+#endif
+#ifndef TCL_CFG_OPTIMIZED
+    ".no-optimize"
+#endif
+#ifdef __OBJC__
+    ".objective-c"
+#if defined(__cplusplus)
+    "plusplus"
+#endif
+#endif
+#ifdef TCL_CFG_PROFILED
+    ".profile"
+#endif
+#ifdef PURIFY
+    ".purify"
+#endif
+#ifdef STATIC_BUILD
+    ".static"
+#endif
+;
+
 #ifdef __cplusplus
 extern "C" {
 #endif  /* __cplusplus */
@@ -217,64 +269,18 @@ Tdbc_Init(
     /* Create the provided commands */
 
     for (i = 0; commandTable[i].name != NULL; ++i) {
-	Tcl_CreateObjCommand(interp, commandTable[i].name, commandTable[i].proc,
+	Tcl_CreateObjCommand2(interp, commandTable[i].name, commandTable[i].proc,
 			     NULL, NULL);
     }
     if (Tcl_GetCommandInfo(interp, "::tcl::build-info", &info)) {
+#if TCL_MAJOR_VERSION > 8
+	if (info.isNativeObjectProc == 2) {
+	    Tcl_CreateObjCommand2(interp, "::tdbc::build-info",
+		    info.objProc2, (void *)version, NULL);
+	} else
+#endif
 	Tcl_CreateObjCommand(interp, "::tdbc::build-info",
-		info.objProc, (void *)(
-		    PACKAGE_VERSION "+" STRINGIFY(TDBC_VERSION_UUID)
-#if defined(__clang__) && defined(__clang_major__)
-			    ".clang-" STRINGIFY(__clang_major__)
-#if __clang_minor__ < 10
-			    "0"
-#endif
-			    STRINGIFY(__clang_minor__)
-#endif
-#if defined(__cplusplus) && !defined(__OBJC__)
-			    ".cplusplus"
-#endif
-#ifndef NDEBUG
-			    ".debug"
-#endif
-#if !defined(__clang__) && !defined(__INTEL_COMPILER) && defined(__GNUC__)
-			    ".gcc-" STRINGIFY(__GNUC__)
-#if __GNUC_MINOR__ < 10
-			    "0"
-#endif
-			    STRINGIFY(__GNUC_MINOR__)
-#endif
-#ifdef __INTEL_COMPILER
-			    ".icc-" STRINGIFY(__INTEL_COMPILER)
-#endif
-#ifdef TCL_MEM_DEBUG
-			    ".memdebug"
-#endif
-#if defined(_MSC_VER)
-			    ".msvc-" STRINGIFY(_MSC_VER)
-#endif
-#ifdef USE_NMAKE
-			    ".nmake"
-#endif
-#ifndef TCL_CFG_OPTIMIZED
-			    ".no-optimize"
-#endif
-#ifdef __OBJC__
-			    ".objective-c"
-#if defined(__cplusplus)
-			    "plusplus"
-#endif
-#endif
-#ifdef TCL_CFG_PROFILED
-			    ".profile"
-#endif
-#ifdef PURIFY
-			    ".purify"
-#endif
-#ifdef STATIC_BUILD
-			    ".static"
-#endif
-		), NULL);
+		info.objProc, (void *)version, NULL);
     }
 
     /* Provide the TDBC package */

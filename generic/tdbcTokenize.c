@@ -190,7 +190,7 @@ MODULE_SCOPE int
 TdbcTokenizeObjCmd(
     TCL_UNUSED(void *),	/* Unused */
     Tcl_Interp* interp,		/* Tcl interpreter */
-    int objc,			/* Parameter count */
+    Tcl_Size objc,			/* Parameter count */
     Tcl_Obj *const objv[])	/* Parameter vector */
 {
     Tcl_Obj* retval;
