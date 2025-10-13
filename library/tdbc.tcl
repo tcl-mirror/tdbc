@@ -352,7 +352,7 @@ oo::class create ::tdbc::connection {
 		    $catalogClause
 	     WHERE xtable.TABLE_NAME = :tableName
 	       AND xtable.CONSTRAINT_TYPE = 'PRIMARY KEY'
-  	"]
+	"]
     }
 
     # The default implementation of the 'primarykeys' method uses the

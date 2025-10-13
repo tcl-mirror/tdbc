@@ -32,7 +32,7 @@ static const struct TdbcCommand {
 } commandTable[] = {
     { "::tdbc::mapSqlState",	TdbcMapSqlStateObjCmd },
     { "::tdbc::tokenize",	TdbcTokenizeObjCmd },
-    { NULL,		 	NULL               },
+    { NULL,			NULL               },
 };
 
 /* Table mapping SQLSTATE to error code */

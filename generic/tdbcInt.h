@@ -54,6 +54,7 @@
 
 #if TCL_MAJOR_VERSION < 9
   typedef Tcl_ObjCmdProc Tcl_ObjCmdProc2;
+# define Tcl_CreateObjCommand2 Tcl_CreateObjCommand
 # undef Tcl_Size
   typedef int Tcl_Size;
 #endif

@@ -73,7 +73,7 @@
 
 	* tclconfig/ChangeLog:
 	* tclconfig/tcl.m4: Update to latest TEA
-	* configure: 	autoconf-2.59
+	* configure:	autoconf-2.59
 
 2011-08-01  Don Porter  <dgp@users.sourceforge.net>
 
@@ -167,7 +167,7 @@
 			approach to pkgIndex.tcl generation. (It's now built
 			at configure time, rather than from the Makefile.)
 			Advanced version number to 1.0b16.
-	* configure: 	autoconf 2.59
+	* configure:	autoconf 2.59
 
 2010-06-19  Kevin B. Kenny  <kennykb@acm.org>
 
