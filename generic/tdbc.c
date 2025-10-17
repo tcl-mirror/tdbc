@@ -162,7 +162,7 @@ TdbcMapSqlStateObjCmd(
     TCL_UNUSED(void *),		/* No client data */
     Tcl_Interp* interp,		/* Tcl interpreter */
     Tcl_Size objc,			/* Parameter count */
-    Tcl_Obj *const objv[]	/* Parameter vector */
+    Tcl_Obj *const *objv	/* Parameter vector */
 ) {
     if (objc != 2) {
 	Tcl_WrongNumArgs(interp, 1, objv, "sqlstate");
