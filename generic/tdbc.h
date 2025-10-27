@@ -67,7 +67,7 @@ DLLIMPORT int		Tdbc_Init(Tcl_Interp* interp);
  * tdbc.decls.
  */
 
-#include "tdbcDecls.h"
+#include "tdbcDecls.h"  /* IWYU pragma: export */
 
 #endif
 
