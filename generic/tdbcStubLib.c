@@ -69,7 +69,7 @@ TdbcInitializeStubs(
     if (clientData == NULL) {
 	Tcl_ResetResult(interp);
 	Tcl_AppendResult(interp, "Error loading ", packageName, " package: "
-		"package not present, incomplete or misconfigured.", NULL);
+		"package not present, incomplete or misconfigured.", (char *)NULL);
 	return NULL;
     }
 
@@ -97,7 +97,7 @@ TdbcInitializeStubs(
     Tcl_ResetResult(interp);
     Tcl_AppendResult(interp, "Error loading ", packageName, " package "
 	    "(requested version \"", version, "\", loaded version \"",
-	    actualVersion, "\"): ", errorMsg, NULL);
+	    actualVersion, "\"): ", errorMsg, (char *)NULL);
     return NULL;
 
 }
