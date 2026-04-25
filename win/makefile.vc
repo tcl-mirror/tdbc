@@ -27,13 +27,13 @@ PRJ_DEFINES = $(PRJ_DEFINES) -I$(TMP_DIR)
 !if [echo REM = This file is generated from Makefile.vc > versions.vc]
 !endif
 !if [echo TCL_VERSION_REQ = \>> versions.vc] \
-   && [nmakehlp -V ..\configure.ac TCL_VERSION_REQ >> versions.vc]
+   && [$(NMAKEHLP_NATIVE) -V ..\configure.ac TCL_VERSION_REQ >> versions.vc]
 !endif
 !if [echo TCL_VERSION_DESIRED = \>> versions.vc] \
-   && [nmakehlp -V ..\configure.ac TCL_VERSION_DESIRED >> versions.vc]
+   && [$(NMAKEHLP_NATIVE) -V ..\configure.ac TCL_VERSION_DESIRED >> versions.vc]
 !endif
 !if [echo TCLOO_VERSION_REQ = \>> versions.vc] \
-   && [nmakehlp -V ..\configure.ac TCLOO_VERSION_REQ >> versions.vc]
+   && [$(NMAKEHLP_NATIVE) -V ..\configure.ac TCLOO_VERSION_REQ >> versions.vc]
 !endif
 
 !include "versions.vc"
@@ -61,7 +61,7 @@ PRJ_HEADERS = \
 # all replacements below so define our own it.
 pkgindex:   $(OUT_DIR)\pkgIndex.tcl
 $(OUT_DIR)\pkgIndex.tcl: $(ROOT)\pkgIndex.tcl.in
-	@nmakehlp -s << $** > $@
+	@$(NMAKEHLP_NATIVE) -s << $** > $@
 @PACKAGE_NAME@        $(PROJECT)
 @PACKAGE_VERSION@     $(DOTVERSION)
 @TCL_VERSION_REQ@     $(TCL_VERSION_REQ)
@@ -85,7 +85,7 @@ $(TMP_DIR)\tdbcUuid.h:	$(ROOT)\manifest.uuid
 # TBD - this (meaning using nmake builds for autoconf) does not really work
 # and never has. Perhaps it should be removed.
 $(OUT_DIR)\tdbcConfig.sh: $(ROOT)\tdbcConfig.sh.in
-	nmakehlp -s << $** > $@
+	$(NMAKEHLP_NATIVE) -s << $** > $@
 @PACKAGE_VERSION@            $(DOTVERSION)
 @PKG_LIB_FILE@               $(PRJLIBNAME)
 @PKG_LIB_FILE8@              $(PRJLIBNAME8)
